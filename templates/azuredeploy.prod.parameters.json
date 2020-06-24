@@ -1,0 +1,190 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualNetworkName": {
+      "value": "OpenFoodNetworkProdVnet"
+    },
+    "virtualNetworkAddressPrefix": {
+      "value": "10.0.0.0/16"
+    },
+    "subnetName": {
+      "value": "Default"
+    },
+    "subnetAddressPrefix": {
+      "value": "10.0.0.0/24"
+    },
+    "storageAccountName": {
+      "value": "ofnprodstorageaccount"
+    },
+    "storageAccountType": {
+      "value": "Premium_LRS"
+    },
+    "vmName": {
+      "value": "OpenFoodNetworkProdVm"
+    },
+    "vmSize": {
+      "value": "Standard_F4s_v2"
+    },
+    "imagePublisher": {
+      "value": "Canonical"
+    },
+    "imageOffer": {
+      "value": "UbuntuServer"
+    },
+    "imageSku": {
+      "value": "18.04-LTS"
+    },
+    "authenticationType": {
+      "value": "password"
+    },
+    "adminUsername": {
+      "value": "azadmin"
+    },
+    "adminPasswordOrKey": {
+      "value": "Trustno1"
+    },
+    "osDiskSize": {
+      "value": 100
+    },
+    "numDataDisks": {
+      "value": 1
+    },
+    "dataDiskSize": {
+      "value": 10
+    },
+    "dataDiskCaching": {
+      "value": "ReadWrite"
+    },
+    "scriptFilePath": {
+      "value": "https://ofdstorageaccount.blob.core.windows.net/scripts"
+    },
+    "scriptFileNames": {
+      "value": [
+        "install-prod.sh"
+      ]
+    },
+    "deployLogAnalytics": {
+      "value": true
+    },
+    "workspaceName": {
+      "value": "OpenFoodNetworkProdWorkspace"
+    },
+    "workspaceSku": {
+      "value": "Standard"
+    },
+    "deployFrontDoor": {
+      "value": true
+    },
+    "frontDoorName": {
+      "value": "OpenFoodNetworkProdFrontDoor"
+    },
+    "frontDoorFrontendEndpoint": {
+      "value": {
+        "name": "MainFrontendEndpoint",
+        "sessionAffinityEnabledState": "Disabled",
+        "sessionAffinityTtlSeconds": 0
+      }
+    },
+    "frontDoorBackendPool": {
+      "value": {
+        "name": "VmBackendPool",
+        "loadBalancerName": "VmLoadBalancer"
+      }
+    },
+    "frontDoorRoutingRule": {
+      "value": {
+        "name": "VmRoutingRule",
+        "acceptedProtocols": [
+          "Https"
+        ],
+        "patternsToMatch": [
+          "/*"
+        ],
+        "customForwardingPath": "/",
+        "forwardingProtocol": "HttpsOnly",
+        "cacheConfiguration": {
+          "queryParameterStripDirective": "StripNone",
+          "dynamicCompression": "Enabled"
+        }
+      }
+    },
+    "frontDoorHealthProbeSettings": {
+      "value": {
+        "name": "VmHealthProbeSettings",
+        "intervalInSeconds": 30,
+        "path": "/",
+        "protocol": "Https"
+      }
+    },
+    "httpPort": {
+      "value": 3000
+    },
+    "httpsPort": {
+      "value": 443
+    },
+    "deployWaf": {
+      "value": true
+    },
+    "wafPolicyName": {
+      "value": "OpenFoodNetworkProdWaf"
+    },
+    "wafMode": {
+      "value": "Detection"
+    },
+    "gitUsername": {
+      "value": "openfoodfoundation"
+    },
+    "gitEmail": {
+      "value": "xxxx@contoso.com"
+    },
+    "deployPostgreSQL": {
+      "value": true
+    },
+    "serverName": {
+      "value": "OpenFoodNetworkPostgreSQL"
+    },
+    "databaseName": {
+      "value": "open_food_network_prod"
+    },
+    "administratorLogin": {
+      "value": "azadmin"
+    },
+    "administratorLoginPassword": {
+      "value": "Trustno1"
+    },
+    "databaseSkuCapacity": {
+      "value": 2
+    },
+    "databaseSkuName": {
+      "value": "GP_Gen5_2"
+    },
+    "databaseSkuSizeMB": {
+      "value": 51200
+    },
+    "databaseSkuTier": {
+      "value": "GeneralPurpose"
+    },
+    "postgresqlVersion": {
+      "value": "9.6"
+    },
+    "databaseskuFamily": {
+      "value": "Gen5"
+    },
+    "databaseFirewallStartIpAddress": {
+      "value": "0.0.0.0"
+    },
+    "databaseFirewallEndIpAddress": {
+      "value": "255.255.255.255"
+    },
+    "databaseCharset": {
+      "value": "utf8"
+    },
+    "databaseCollation": {
+      "value": "English_United States.1252"
+    },
+    "postgreSQLPrivateEndpointName": {
+      "value": "OpenFoodNetworkPostgreSQLPrivateEndpoint"
+    }
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualNetworkName": {
+      "value": "OpenFoodNetworkVnet"
+    },
+    "virtualNetworkAddressPrefix": {
+      "value": "10.0.0.0/16"
+    },
+    "subnetName": {
+      "value": "Default"
+    },
+    "subnetAddressPrefix": {
+      "value": "10.0.0.0/24"
+    },
+    "storageAccountName": {
+      "value": "ofndevstorageaccount"
+    },
+    "storageAccountType": {
+      "value": "Premium_LRS"
+    },
+    "vmName": {
+      "value": "OpenFoodNetworkVm"
+    },
+    "vmSize": {
+      "value": "Standard_F4s_v2"
+    },
+    "imagePublisher": {
+      "value": "Canonical"
+    },
+    "imageOffer": {
+      "value": "UbuntuServer"
+    },
+    "imageSku": {
+      "value": "18.04-LTS"
+    },
+    "authenticationType": {
+      "value": "password"
+    },
+    "adminUsername": {
+      "value": "azadmin"
+    },
+    "adminPasswordOrKey": {
+      "value": "Trustno1"
+    },
+    "osDiskSize": {
+      "value": 100
+    },
+    "numDataDisks": {
+      "value": 1
+    },
+    "dataDiskSize": {
+      "value": 10
+    },
+    "dataDiskCaching": {
+      "value": "ReadWrite"
+    },
+    "scriptFilePath": {
+      "value": "https://ofndevstorageaccount.blob.core.windows.net/scripts"
+    },
+    "scriptFileNames": {
+      "value": [
+        "install-dev.sh",
+        "install-ofn.sh"
+      ]
+    },
+    "deployLogAnalytics": {
+      "value": true
+    },
+    "workspaceName": {
+      "value": "OpenFoodNetworDevWorkspace"
+    },
+    "workspaceSku": {
+      "value": "Standard"
+    },
+    "deployFrontDoor": {
+      "value": true
+    },
+    "frontDoorName": {
+      "value": "OpenFoodNetworkFrontDoor"
+    },
+    "frontDoorFrontendEndpoint": {
+      "value": {
+        "name": "MainFrontendEndpoint",
+        "sessionAffinityEnabledState": "Disabled",
+        "sessionAffinityTtlSeconds": 0
+      }
+    },
+    "frontDoorBackendPool": {
+      "value": {
+        "name": "VmBackendPool",
+        "loadBalancerName": "VmLoadBalancer"
+      }
+    },
+    "frontDoorRoutingRule": {
+      "value": {
+        "name": "VmRoutingRule",
+        "acceptedProtocols": [
+          "Http",
+          "Https"
+        ],
+        "patternsToMatch": [
+          "/*"
+        ],
+        "customForwardingPath": "/",
+        "forwardingProtocol": "HttpOnly",
+        "cacheConfiguration": {
+          "queryParameterStripDirective": "StripNone",
+          "dynamicCompression": "Enabled"
+        }
+      }
+    },
+    "frontDoorHealthProbeSettings": {
+      "value": {
+        "name": "VmHealthProbeSettings",
+        "intervalInSeconds": 60,
+        "path": "/",
+        "protocol": "Http"
+      }
+    },
+    "httpPort": {
+      "value": 3000
+    },
+    "httpsPort": {
+      "value": 443
+    },
+    "deployWaf": {
+      "value": true
+    },
+    "wafPolicyName": {
+      "value": "OpenFoodNetworkWaf"
+    },
+    "wafMode": {
+      "value": "Detection"
+    },
+    "gitUsername": {
+      "value": "openfoodfoundation"
+    },
+    "gitEmail": {
+      "value": "xxxx@contoso.com"
+    },
+    "gitBranch": {
+      "value": "2.9.10"
+    }
+  }
+}

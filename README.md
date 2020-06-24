@@ -1,6 +1,6 @@
 # Deploying Open Food Network to Azure #
 
-This repository provides the ARM templates and Bash scripts (scripts) to automate the deployment of the [Open Food Network](https://github.com/openfoodfoundation/openfoodnetwork) (OFN) application server to Azure in the development or production environment. [Open Food Network](https://github.com/openfoodfoundation/openfoodnetwork) solution allows to establish an online marketplace for local food which enables a network of independent online food stores that connects farmers and food hubs (including co-ops, online farmers markets, independent food businesses, etc) with individuals and local businesses. It gives farmers and food hubs an easier and fairer way to distribute their food.
+This repository provides the ARM templates and Bash scripts (scripts) to automate the deployment of the [Open Food Network](https://github.com/openfoodfoundation/openfoodnetwork) (OFN) application server to Azure in the development or production environment. [Open Food Network](https://github.com/openfoodfoundation/openfoodnetwork) solution allows to establish an online marketplace for local food which enables a network of independent online food stores that connects farmers and food hubs (including co-ops, online farmers markets, independent food businesses, etc) with individuals and local businesses. It gives farmers and food hubs an easier and fairer way to distribute their products.
 
 ## Production Environment ##
 

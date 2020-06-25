@@ -69,11 +69,26 @@ The following documents contain the instructions on how to deploy the Open Food 
 
 This repository contains the following artifacts:
 
-```bash
-|── docs           # Contains documents
-|── images         # Contains images
-├── scripts        # Contains Bash scripts to deploy the application and configure the VM
-└── templates      # Contains ARM templates to deploy the Linux VM
+```batch
+ ┣ 📂docs
+ ┃ ┣ 📜development-environment.md
+ ┃ ┗ 📜production-environment.md
+ ┣ 📂images
+ ┃ ┣ 📜development.png
+ ┃ ┗ 📜production.png
+ ┣ 📂scripts
+ ┃ ┣ 📜deploy-dev.sh
+ ┃ ┣ 📜deploy-prod.sh
+ ┃ ┣ 📜install-dev.sh
+ ┃ ┣ 📜install-ofn.sh
+ ┃ ┗ 📜install-prod.sh
+ ┣ 📂templates
+ ┃ ┣ 📜azuredeploy.dev.json
+ ┃ ┣ 📜azuredeploy.dev.parameters.json
+ ┃ ┣ 📜azuredeploy.prod.json
+ ┃ ┗ 📜azuredeploy.prod.parameters.json
+ ┣ 📜LICENSE
+ ┗ 📜README.md
 ```
 
 ## Get Started ##

@@ -132,12 +132,6 @@
     "wafMode": {
       "value": "Detection"
     },
-    "gitUsername": {
-      "value": "openfoodfoundation"
-    },
-    "gitEmail": {
-      "value": "xxxx@contoso.com"
-    },
     "deployPostgreSQL": {
       "value": true
     },

@@ -32,8 +32,6 @@ The [Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azu
 - [Private Link for Azure Database for PostgreSQL](https://docs.microsoft.com/en-us/azure/private-link/private-link-overview): Azure Private Link enables you to access Azure PaaS Services (for example, Azure Storage and SQL Database) and Azure hosted customer-owned/partner services over a [Private Endpoint](https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-overview) in your virtual network. Traffic between your virtual network and the service travels the Microsoft backbone network. This resource is used to let the virtual machine hosting the OFN solution to access data hosted by the Azure Database for PostgreSQL server via a private IP address.
 - [Private DNS Zone](https://docs.microsoft.com/en-us/azure/dns/private-dns-overview): Azure Private DNS provides a reliable, secure DNS service to manage and resolve domain names in a virtual network without the need to add a custom DNS solution. By using private DNS zones, you can use your own custom domain names rather than the Azure-provided names available today. You can use private DNS zones to override the DNS resolution for a particular [Private Endpoint](https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-overview). A private DNS zone can be linked to your virtual network to resolve specific domains. For more information about Private Endpoints and Private DNS Zone integration, see [Azure Private Endpoint DNS configuration](https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns)
 
-For more information on how to deploy the Open Foor Network solution to a production environment, see [Deploy Open Food Network solution to a Production Environment](./docs/prod-env-deployment.md)
-
 ## Development Environment ##
 
 The following picture shows the topology of the development environment deployed by the Azure Resource Manager (ARM) template.
@@ -60,7 +58,12 @@ The [Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azu
   - SSL Termination
 - [WAF Policy](https://docs.microsoft.com/en-us/azure/web-application-firewall/overview): Web Application Firewall (WAF) provides centralized protection of your web applications from common exploits and vulnerabilities. Web applications are increasingly targeted by malicious attacks that exploit commonly known vulnerabilities. SQL injection and cross-site scripting are among the most common attacks. This resource can be deployed along with Front Door.
 
-For more information on how to deploy the Open Foor Network solution to a development and testing environment, see [Deploy Open Food Network solution to a Development Environment](./docs/dev-env-deployment.md)
+## Deployment ##
+
+The following documents contain the instructions on how to deploy the Open Food Network solution in a development or production environment:
+
+- [Deploy Open Food Network solution to a Production Environment](./docs/prod-env-deployment.md)
+- [Deploy Open Food Network solution to a Development Environment](./docs/dev-env-deployment.md)
 
 ## Artifacts ##
 

@@ -2,7 +2,7 @@
 
 The following picture shows the topology of the development environment deployed by the Azure Resource Manager (ARM) template.
 
-![topology](./images/development.png)
+![topology](../images/development.png)
 
 The [Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/overview) deploys the following resources:
 
@@ -57,12 +57,12 @@ In the parameters section of an [Azure Resource Manager template](https://docs.m
 
 | Name |Type | Default Value | Value |
 | ------------- | ------------- | ------------- | ------------- |
-| location | string | resourceGroup().location | Specifies the location for all the resources deployed by the template.|
+| location | string | See [template](../templates/azuredeploy.dev.json) | Specifies the location for all the resources deployed by the template.|
 | virtualNetworkName | string | UbuntuVnet | Specifies the name of the virtual network hosting the virtual machine. |
 | virtualNetworkAddressPrefix | string | 10.0.0.0/16 | Specifies the address prefix of the virtual network hosting the virtual machine. |
 | subnetName | string | DefaultSubnet | Specifies the name of the subnet hosting the virtual machine. |
 | subnetAddressPrefix | string | 10.0.0.0/24 | Specifies the address prefix of the subnet hosting the virtual machine. |
-| storageAccountName | string | uniquestring(resourceGroup().id | Specifies the globally unique name for the storage account used to store the boot diagnostics logs of the virtual machine. |
+| storageAccountName | string | Unique ID | Specifies the globally unique name for the storage account used to store the boot diagnostics logs of the virtual machine. |
 | storageAccountType | string | Premium_LRS | Specifies the storage SKU for the OS and data disks of the virtual machine. |
 | vmName | string | OpenFoodNetworkVm | Specifies the name of the virtual machine. |
 | vmSize | string | Standard_D1 | Specifies the size of the virtual machine. |
@@ -77,23 +77,23 @@ In the parameters section of an [Azure Resource Manager template](https://docs.m
 | osDiskSize | int | 100 | Specifies the size in GB of the OS disk of the virtual machine. |
 | dataDiskSize | int | 100 | Specifies the size in GB of each data disk that is attached to the virtual machine. |
 | dataDiskCaching | string | ReadWrite | Specifies the caching requirements for the data disks. |
-| scriptFilePath | string | [URI](https://raw.githubusercontent.com/paolosalvatori/ofn-azure-install/master/scripts)  | Specifies the relative path of the scripts used to initialize the virtual machine. |
-| scriptFileNames | array | ["install-dev.sh", "install-ofn.sh"] | Contains the scripts to download from the URI specified by the scriptFilePath parameter. |
+| scriptFilePath | string | See [template](../templates/azuredeploy.dev.json)  | Specifies the relative path of the scripts used to initialize the virtual machine. |
+| scriptFileNames | array | See [template](../templates/azuredeploy.dev.json) | Contains the scripts to download from the URI specified by the scriptFilePath parameter. |
 | deployLogAnalytics | bool | true | Specifies whether to deploy a Log Analytics workspace to monitor the health and performance of the virtual machine. |
-| workspaceName | string | concat(parameters('vmName'), uniquestring(resourceGroup().id)) | Specifies the globally unique name of the Log Analytics workspace. |
+| workspaceName | string | Unique ID | Specifies the globally unique name of the Log Analytics workspace. |
 | workspaceSku | string | PerGB2018 | Specifies the SKU of the Log Analytics workspace. |
 | deployFrontDoor | bool | true | Specifies whether to deploy Front Door. |
-| frontDoorName | string | concat(parameters('vmName'), uniquestring(resourceGroup().id)) | Specifies the globally unique name of the Front Door resource. |
+| frontDoorName | string | Unique ID | Specifies the globally unique name of the Front Door resource. |
 | frontDoorEnforceCertificateNameCheck | string | Disabled | Specifies whether to enforce certificate name check on HTTPS requests to all backend pools. |
-| frontDoorFrontendEndpoint | object | See the template | Specifies the name and properties of the Front Door frontend endpoint. |
-| frontDoorBackendPool | object | See the template | Specifies the the name and properties of the  Front Door backend pool. |
-| frontDoorRoutingRule | object | See the template | Specifies the name and properties of the Front Door routing rule. |
-| frontDoorHealthProbeSettings | object | See the template | Specifies the name and properties of the Front Door health probe settings. |
+| frontDoorFrontendEndpoint | object | See [template](../templates/azuredeploy.dev.json) | Specifies the name and properties of the Front Door frontend endpoint. |
+| frontDoorBackendPool | object | See [template](../templates/azuredeploy.dev.json) | Specifies the the name and properties of the  Front Door backend pool. |
+| frontDoorRoutingRule | object | See [template](../templates/azuredeploy.dev.json) | Specifies the name and properties of the Front Door routing rule. |
+| frontDoorHealthProbeSettings | object | See [template](../templates/azuredeploy.dev.json) | Specifies the name and properties of the Front Door health probe settings. |
 | deployWaf | bool | true | Specifies whether to deploy a global WAF policy in Front Door. |
 | wafPolicyName | string | OpenFoodNetworkWAF | Specifies the name of the WAF policy used by Front Door. |
 | wafMode | string | Detection | Specifies whether the WAF policy is configured in detection or prevention mode. |
-| gitUsername | string | No default value | Specifies the Git account used to clone the OFN solution: https://github.com/GIT_ACCOUNT/openfoodnetwork. |
-| gitEmail | string | No default value | Specifies the email to use in the Git configuration. |
-| gitBranch | string | master | Specifies the name of the OFN branch to clone with Git. |
+| gitUsername | string | No default value | Specifies the Git account used to clone the OFN solution. See [install-ofn.sh](../scripts/install-ofn.sh) |
+| gitEmail | string | No default value | Specifies the email to use in the Git configuration. See [install-ofn.sh](../scripts/install-ofn.sh) |
+| gitBranch | string | master | Specifies the name of the OFN branch to clone with Git. See [install-ofn.sh](../scripts/install-ofn.sh) |
 | httpPort | int | 3000 | Specifies the HTTP port used by the Open Foor Network solution. |
 | httpsPort | int | 443 | Specifies the HTTPS port (if any) used by the Open Foor Network solution. |

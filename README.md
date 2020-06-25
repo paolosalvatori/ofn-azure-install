@@ -62,42 +62,42 @@ The [Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azu
 
 The following documents contain the instructions on how to deploy the Open Food Network solution in a development or production environment:
 
-- [Deploy Open Food Network solution to a Production Environment](./docs/prod-env-deployment.md)
-- [Deploy Open Food Network solution to a Development Environment](./docs/dev-env-deployment.md)
+- [Deploy Open Food Network solution to a Production Environment](./docs/production-environment.md)
+- [Deploy Open Food Network solution to a Development Environment](./docs/development-environment.md)
 
 ## Artifacts ##
 
 This repository contains the following artifacts:
 
-```batch
+```bash
 |── docs           # Contains documents
 |── images         # Contains images
 ├── scripts        # Contains Bash scripts to deploy the application and configure the VM
-|── templates      # Contains ARM templates to deploy the Linux VM
+└── templates      # Contains ARM templates to deploy the Linux VM
 ```
 
 ## Get Started ##
 
 If you're planning on contributing to the project, you can begin by forking this repository using the **Fork** button in the top-right corner of this screen. You should then be able to use git clone to copy your fork onto your local machine.
 
-```bash
+```git
 git clone https://github.com/YOUR_GITHUB_ACCOUNT/ofn-azure-install
 ```
 
 Open the directory containing the local copy of the project:
 
-```bash
+```git
 cd ofn-azure-install
 ```
 
 And then add an upstream remote that points to the main repo:
 
-```bash
+```git
 git remote add upstream https://github.com/paolosalvatori/ofn-azure-install
 ```
 
 Fetch the latest version of the master btanch from the upstream repository:
 
-```bash
+```git
 git fetch upstream master
 ```

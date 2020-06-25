@@ -57,7 +57,7 @@
       "value": "ReadWrite"
     },
     "scriptFilePath": {
-      "value": "https://ofndevstorageaccount.blob.core.windows.net/scripts"
+      "value": "https://raw.githubusercontent.com/paolosalvatori/ofn-azure-install/master/scripts"
     },
     "scriptFileNames": {
       "value": [

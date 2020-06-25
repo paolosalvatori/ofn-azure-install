@@ -152,13 +152,16 @@
     },
     "scriptFilePath": {
       "type": "string",
-      "defaultValue": "https://ofdstorageaccount.blob.core.windows.net/scripts",
+      "defaultValue": "https://raw.githubusercontent.com/paolosalvatori/ofn-azure-install/master/scripts",
       "metadata": {
         "description": "The relative path of the script to download"
       }
     },
     "scriptFileNames": {
       "type": "array",
+      "defaultValue": [
+        "install-prod.sh"
+      ],
       "metadata": {
         "description": "An array containing the name of the scripts to download from the URI specified by the scriptFilePath parameter."
       }
@@ -322,7 +325,7 @@
     },
     "serverName": {
       "type": "string",
-      "defaultValue": "OpenFoodNetworkPostgreSQL",
+      "defaultValue": "[concat(parameters('vmName'), uniquestring(resourceGroup().id))]",
       "minLength": 1,
       "metadata": {
         "description": "Specifies the name of the PostgreSQL server."
@@ -364,7 +367,7 @@
         32
       ],
       "metadata": {
-        "description": "Specifies the compute capacity in vCores (2,4,8,16,32) of the Azure Database for PostgreSQL"
+        "description": "Specifies the compute capacity in vCores (2,4,8,16,32) of the Azure Database for PostgreSQL."
       }
     },
     "databaseSkuName": {
@@ -419,7 +422,7 @@
         "10.10",
         "11.5"
       ],
-      "defaultValue": "9.6",
+      "defaultValue": "9.5",
       "metadata": {
         "description": "PostgreSQL version"
       }
@@ -461,7 +464,7 @@
     },
     "postgreSQLPrivateEndpointName": {
       "type": "string",
-      "defaultValue": "OpenFoodNetworkPostgreSQLPrivateEndpoint",
+      "defaultValue": "PostgreSQLPrivateEndpoint",
       "metadata": {
         "description": "Specifies the name of the private link to Azure Database for PostgreSQL."
       }

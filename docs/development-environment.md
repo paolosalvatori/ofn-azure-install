@@ -51,13 +51,25 @@ You can optionally deploy a Web Access Firewall (WAF) policy and associate it to
 
 Azure Front Door is configured to collect diagnostics logs and metrics in a Log Analytics workspace deployed by the ARM template.
 
+## Prerequisites ##
+
+- An Azure subscription. If you don't have an Azure subscription, [sign up now](https://azure.microsoft.com/en-us/free/?utm_source=campaign&utm_campaign=vscode-tutorial-functions-extension&mktingSource=vscode-tutorial-functions-extension) for a free 30-day account with $200 in Azure credits to try out any combination of services.
+- (Optional) [Visual Studio Code](https://code.visualstudio.com/) with the [Azure Functions extension pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-node-azure-pack).
+
+## Deployment ##
+
+You can use the [azuredeploy.dev.json](../templates/azuredeploy.dev.json) ARM template and [azuredeploy.dev.parameters.json](../templates/azuredeploy.dev.parameters.json)parameters.json file included in this repository to deploy the development environment of the OFN solution to Azure. For more information on how you can customize or contribute to the development of the OFN solution, you can refer to [Open Food Network](https://github.com/openfoodfoundation/openfoodnetwork). You can use the [deploy-dev.sh](../scripts/deploy-dev.sh) Bash script to deploy all the Azure resources to a single resource group to an Azure region of choice using the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest). A resource group is a container that holds related resources for an Azure solution. The resource group includes those resources that you want to manage as a group. You decide which resources belong in a resource group based on what makes the most sense for your organization. For more information, see [Resource groups](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/overview#resource-groups). Before deploying the solution to Azure make sure to perform the following steps:
+
+- Edit the variables in the [deploy-dev.sh](../scripts/deploy-dev.sh) to choose a resource group name and a location for the OFN solution.
+- Edit the [azuredeploy.dev.parameters.json](../templates/azuredeploy.dev.parameters.json) file as indicated the next section before deploying the solution.
+
 ## Parameters ##
 
 In the parameters section of an [Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/overview) template, you specify which values you can input when deploying the resources. For more information about the syntax of ARM templates, see [Understand the structure and syntax of ARM templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-syntax). When deploying an ARM template to an Azure subscription via a Bash script or a PowerShell script, you can pass parameters as inline values in your script, or you can use a JSON file that contains the parameter values. For more information, see [Create Resource Manager parameter file](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/parameter-files). The following table contains the list of the parameters that you can specify in the parameters file to customize the deployment of the OFN development environment. The **Default Value** column indicates the default value defined in the ARM template for that parameter in case you omit to specify a value when deploying the template. We suggest to review and customize the value of the parameters in the [azuredeploy.dev.parameters.json](../templates/azuredeploy.dev.parameters.json) file before deploying the ARM template to avoid name collisions with existing Azure resources.
 
 | Name |Type | Default Value | Value |
 | ------------- | ------------- | ------------- | ------------- |
-| location | string | See [template](../templates/azuredeploy.dev.json) | Specifies the location for all the resources deployed by the template.|
+| location | string | See [ARM template](../templates/azuredeploy.dev.json) | Specifies the location for all the resources deployed by the template.|
 | virtualNetworkName | string | UbuntuVnet | Specifies the name of the virtual network hosting the virtual machine. |
 | virtualNetworkAddressPrefix | string | 10.0.0.0/16 | Specifies the address prefix of the virtual network hosting the virtual machine. |
 | subnetName | string | DefaultSubnet | Specifies the name of the subnet hosting the virtual machine. |
@@ -77,23 +89,29 @@ In the parameters section of an [Azure Resource Manager template](https://docs.m
 | osDiskSize | int | 100 | Specifies the size in GB of the OS disk of the virtual machine. |
 | dataDiskSize | int | 100 | Specifies the size in GB of each data disk that is attached to the virtual machine. |
 | dataDiskCaching | string | ReadWrite | Specifies the caching requirements for the data disks. |
-| scriptFilePath | string | See [template](../templates/azuredeploy.dev.json)  | Specifies the relative path of the scripts used to initialize the virtual machine. |
-| scriptFileNames | array | See [template](../templates/azuredeploy.dev.json) | Contains the scripts to download from the URI specified by the scriptFilePath parameter. |
+| scriptFilePath | string | See [ARM template](../templates/azuredeploy.dev.json) | Specifies the relative path of the scripts used to initialize the virtual machine. |
+| scriptFileNames | array | See [ARM template](../templates/azuredeploy.dev.json) | Contains the scripts to download from the URI specified by the scriptFilePath parameter. |
 | deployLogAnalytics | bool | true | Specifies whether to deploy a Log Analytics workspace to monitor the health and performance of the virtual machine. |
 | workspaceName | string | Unique ID | Specifies the globally unique name of the Log Analytics workspace. |
 | workspaceSku | string | PerGB2018 | Specifies the SKU of the Log Analytics workspace. |
 | deployFrontDoor | bool | true | Specifies whether to deploy Front Door. |
 | frontDoorName | string | Unique ID | Specifies the globally unique name of the Front Door resource. |
 | frontDoorEnforceCertificateNameCheck | string | Disabled | Specifies whether to enforce certificate name check on HTTPS requests to all backend pools. |
-| frontDoorFrontendEndpoint | object | See [template](../templates/azuredeploy.dev.json) | Specifies the name and properties of the Front Door frontend endpoint. |
-| frontDoorBackendPool | object | See [template](../templates/azuredeploy.dev.json) | Specifies the the name and properties of the  Front Door backend pool. |
-| frontDoorRoutingRule | object | See [template](../templates/azuredeploy.dev.json) | Specifies the name and properties of the Front Door routing rule. |
-| frontDoorHealthProbeSettings | object | See [template](../templates/azuredeploy.dev.json) | Specifies the name and properties of the Front Door health probe settings. |
+| frontDoorFrontendEndpoint | object | See [ARM template](../templates/azuredeploy.dev.json) | Specifies the name and properties of the Front Door frontend endpoint. |
+| frontDoorBackendPool | object | See [ARM template](../templates/azuredeploy.dev.json) | Specifies the the name and properties of the  Front Door backend pool. |
+| frontDoorRoutingRule | object | See [ARM template](../templates/azuredeploy.dev.json) | Specifies the name and properties of the Front Door routing rule. |
+| frontDoorHealthProbeSettings | object | See [ARM template](../templates/azuredeploy.dev.json) | Specifies the name and properties of the Front Door health probe settings. |
+| httpPort | int | 3000 | Specifies the HTTP port used by the Open Foor Network solution. |
+| httpsPort | int | 443 | Specifies the HTTPS port (if any) used by the Open Foor Network solution. |
 | deployWaf | bool | true | Specifies whether to deploy a global WAF policy in Front Door. |
 | wafPolicyName | string | OpenFoodNetworkWAF | Specifies the name of the WAF policy used by Front Door. |
 | wafMode | string | Detection | Specifies whether the WAF policy is configured in detection or prevention mode. |
 | gitUsername | string | No default value | Specifies the Git account used to clone the OFN solution. See [install-ofn.sh](../scripts/install-ofn.sh) |
 | gitEmail | string | No default value | Specifies the email to use in the Git configuration. See [install-ofn.sh](../scripts/install-ofn.sh) |
 | gitBranch | string | master | Specifies the name of the OFN branch to clone with Git. See [install-ofn.sh](../scripts/install-ofn.sh) |
-| httpPort | int | 3000 | Specifies the HTTP port used by the Open Foor Network solution. |
-| httpsPort | int | 443 | Specifies the HTTPS port (if any) used by the Open Foor Network solution. |
+
+## Alternative Topologies ##
+
+- If you set the **deployLogAnalytics** parameter to **false**, the Log Analytics and the virtual machine extensions used to monitor the virtual machine hosting the OFN solution will not be deployed.
+- If you set the **deployFrontDoor** parameter to **false**, the Front Door global load balancer will not be deployed.
+- If you set the **deployWaf** parameter to **false**, the Web Access Firewall will not be deployed and associated to Front Door.

@@ -279,6 +279,20 @@
         "description": "This parameter contains the name and properties of the health probe settings."
       }
     },
+    "httpPort": {
+      "type": "int",
+      "defaultValue": 3000,
+      "metadata": {
+        "description": "Specifies the HTTP port used by the Open Foor Network solution."
+      }
+    },
+    "httpsPort": {
+      "type": "int",
+      "defaultValue": 443,
+      "metadata": {
+        "description": "Specifies the HTTPS port used by the Open Foor Network solution."
+      }
+    },
     "deployWaf": {
       "type": "bool",
       "defaultValue": true,
@@ -323,20 +337,6 @@
       "defaultValue": "master",
       "metadata": {
         "description": "Specifies the Git repo branch"
-      }
-    },
-    "httpPort": {
-      "type": "int",
-      "defaultValue": 3000,
-      "metadata": {
-        "description": "Specifies the HTTP port used by the Open Foor Network solution."
-      }
-    },
-    "httpsPort": {
-      "type": "int",
-      "defaultValue": 443,
-      "metadata": {
-        "description": "Specifies the HTTPS port used by the Open Foor Network solution."
       }
     }
   },

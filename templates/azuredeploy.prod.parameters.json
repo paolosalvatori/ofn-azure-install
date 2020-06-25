@@ -57,7 +57,7 @@
       "value": "ReadWrite"
     },
     "scriptFilePath": {
-      "value": "https://ofdstorageaccount.blob.core.windows.net/scripts"
+      "value": "https://raw.githubusercontent.com/paolosalvatori/ofn-azure-install/master/scripts"
     },
     "scriptFileNames": {
       "value": [
@@ -184,7 +184,7 @@
       "value": "English_United States.1252"
     },
     "postgreSQLPrivateEndpointName": {
-      "value": "OpenFoodNetworkPostgreSQLPrivateEndpoint"
+      "value": "PostgreSQLPrivateEndpoint"
     }
   }
 }

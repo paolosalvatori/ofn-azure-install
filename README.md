@@ -67,7 +67,7 @@ The following documents contain the instructions on how to deploy the Open Food 
 
 ## Artifacts ##
 
-This repository contains the following artifacts:
+This repository contains the following folders and artifacts:
 
 ```batch
  ┣ 📂docs

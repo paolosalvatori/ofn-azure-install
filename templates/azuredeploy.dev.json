@@ -2,6 +2,13 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Specifies the location for all the resources deployed by the template."
+      }
+    },
     "virtualNetworkName": {
       "defaultValue": "UbuntuVnet",
       "type": "string",
@@ -17,7 +24,7 @@
       }
     },
     "subnetName": {
-      "defaultValue": "Default",
+      "defaultValue": "DefaultSubnet",
       "type": "string",
       "metadata": {
         "description": "The name of the subnet hosting the virtual machine."
@@ -32,8 +39,9 @@
     },
     "storageAccountName": {
       "type": "string",
+      "defaultValue": "[uniquestring(resourceGroup().id)]",
       "metadata": {
-        "description": "Unique DNS Name for the Storage Account where the Virtual Machine's disks will be placed."
+        "description": "The unique DNS name for the storage account used to store the boot diagnostics logs of the virtual machine."
       }
     },
     "storageAccountType": {
@@ -50,34 +58,29 @@
         "Standard_RAGZRS"
       ],
       "metadata": {
-        "description": "Gets or sets the SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType."
+        "description": "The storage SKU for the OS and data disks of the virtual machine."
       }
     },
-    "adminUsername": {
-      "type": "string",
-      "defaultValue": "azadmin",
-      "metadata": {
-        "description": "Username for the virtual machine."
-      }
-    },
+    
     "vmName": {
       "type": "string",
+      "defaultValue": "OpenFoodNetworkVm",
       "metadata": {
-        "description": "Name of the virtual machine. The name will be used as DNS Name for the Public IP used to access the Virtual Machine."
+        "description": "Specifies the name of the virtual machine."
       }
     },
     "vmSize": {
       "type": "string",
       "defaultValue": "Standard_D1",
       "metadata": {
-        "description": "The size of the virtual machine."
+        "description": "Specifies the size of the virtual machine."
       }
     },
     "imagePublisher": {
       "type": "string",
       "defaultValue": "Canonical",
       "metadata": {
-        "description": "The image publisher."
+        "description": "Specifies the image publisher of the disk image used to create the virtual machine."
       }
     },
     "imageOffer": {
@@ -94,22 +97,22 @@
         "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
       }
     },
-    "location": {
-      "type": "string",
-      "defaultValue": "[resourceGroup().location]",
-      "metadata": {
-        "description": "Location for all resources."
-      }
-    },
     "authenticationType": {
       "type": "string",
-      "defaultValue": "sshPublicKey",
+      "defaultValue": "password",
       "allowedValues": [
         "sshPublicKey",
         "password"
       ],
       "metadata": {
         "description": "Type of authentication to use on the Virtual Machine. SSH key is recommended."
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "defaultValue": "azadmin",
+      "metadata": {
+        "description": "Specifies the name of the administrator account of the virtual machine."
       }
     },
     "adminPasswordOrKey": {
@@ -136,7 +139,7 @@
     },
     "dataDiskSize": {
       "type": "int",
-      "defaultValue": 10,
+      "defaultValue": 100,
       "metadata": {
         "description": "The size in GB of each data disk that is attached to the VM."
       }
@@ -150,13 +153,17 @@
     },
     "scriptFilePath": {
       "type": "string",
-      "defaultValue": "https://ofndevstorageaccount.blob.core.windows.net/scripts",
+      "defaultValue": "https://raw.githubusercontent.com/paolosalvatori/ofn-azure-install/master/scripts",
       "metadata": {
         "description": "The relative path of the script to download"
       }
     },
     "scriptFileNames": {
       "type": "array",
+      "defaultValue": [
+        "install-dev.sh",
+        "install-ofn.sh"
+      ],
       "metadata": {
         "description": "An array containing the name of the scripts to download from the URI specified by the scriptFilePath parameter."
       }
@@ -170,9 +177,9 @@
     },
     "workspaceName": {
       "type": "string",
-      "defaultValue": "OpenFoodNetworkLogAnalytics",
+      "defaultValue": "[concat(parameters('vmName'), uniquestring(resourceGroup().id))]",
       "metadata": {
-        "description": "Name of the Log Analytics workspace"
+        "description": "Name of the Log Analytics workspace."
       }
     },
     "workspaceSku": {
@@ -199,7 +206,7 @@
     },
     "frontDoorName": {
       "type": "string",
-      "defaultValue": "OpenFoodNetworkFrontDoor",
+      "defaultValue": "[concat(parameters('vmName'), uniquestring(resourceGroup().id))]",
       "minLength": 5,
       "maxLength": 64,
       "metadata": {
@@ -235,7 +242,7 @@
         "loadBalancerName": "VmLoadBalancer"
       },
       "metadata": {
-        "description": "This parameter contains the name and properties of the Application Gateway Backend Pool"
+        "description": "This parameter contains the name and properties of the  Front Door Backend Pool"
       }
     },
     "frontDoorRoutingRule": {
@@ -281,7 +288,7 @@
     },
     "wafPolicyName": {
       "type": "string",
-      "defaultValue": "OpenFoodNetworkWaf",
+      "defaultValue": "OpenFoodNetworkWAF",
       "metadata": {
         "description": "The name of the WAF policy"
       }
@@ -313,14 +320,14 @@
     },
     "gitBranch": {
       "type": "string",
-      "defaultValue": "",
+      "defaultValue": "master",
       "metadata": {
         "description": "Specifies the Git repo branch"
       }
     },
     "httpPort": {
       "type": "int",
-      "defaultValue": 80,
+      "defaultValue": 3000,
       "metadata": {
         "description": "Specifies the HTTP port used by the Open Foor Network solution."
       }
@@ -376,10 +383,7 @@
       "sku": {
         "name": "Standard_LRS"
       },
-      "kind": "Storage",
-      "properties": {
-        "accountType": "[parameters('storageAccountType')]"
-      }
+      "kind": "StorageV2"
     },
     {
       "apiVersion": "2019-11-01",

@@ -21,7 +21,7 @@
       "value": "Premium_LRS"
     },
     "vmName": {
-      "value": "OpenFoodNetworkProdVm"
+      "value": "OpenFoodNetworkVm"
     },
     "vmSize": {
       "value": "Standard_F4s_v2"

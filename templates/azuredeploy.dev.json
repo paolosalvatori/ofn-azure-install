@@ -39,7 +39,7 @@
     },
     "storageAccountName": {
       "type": "string",
-      "defaultValue": "[uniquestring(resourceGroup().id)]",
+      "defaultValue": "[concat('storage', uniquestring(resourceGroup().id))]",
       "metadata": {
         "description": "The unique DNS name for the storage account used to store the boot diagnostics logs of the virtual machine."
       }
@@ -177,7 +177,7 @@
     },
     "workspaceName": {
       "type": "string",
-      "defaultValue": "[concat(parameters('vmName'), uniquestring(resourceGroup().id))]",
+      "defaultValue": "[concat('workspace', uniquestring(resourceGroup().id))]",
       "metadata": {
         "description": "Name of the Log Analytics workspace."
       }
@@ -206,7 +206,7 @@
     },
     "frontDoorName": {
       "type": "string",
-      "defaultValue": "[concat(parameters('vmName'), uniquestring(resourceGroup().id))]",
+      "defaultValue": "[concat('frontdoor', uniquestring(resourceGroup().id))]",
       "minLength": 5,
       "maxLength": 64,
       "metadata": {

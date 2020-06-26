@@ -86,7 +86,6 @@ In the parameters section of an [Azure Resource Manager template](https://docs.m
 | adminPasswordOrKey | string | No default value | Specifies the SSH Key or password for the virtual machine. SSH key is recommended. |
 | numDataDisks | int | 1 | Specifies the number of data disks of the virtual machine. |
 | osDiskSize | int | 100 | Specifies the size in GB of the OS disk of the virtual machine. |
-| osDiskSize | int | 100 | Specifies the size in GB of the OS disk of the virtual machine. |
 | dataDiskSize | int | 100 | Specifies the size in GB of each data disk that is attached to the virtual machine. |
 | dataDiskCaching | string | ReadWrite | Specifies the caching requirements for the data disks. |
 | scriptFilePath | string | See [ARM template](../templates/azuredeploy.dev.json) | Specifies the relative path of the scripts used to initialize the virtual machine. |

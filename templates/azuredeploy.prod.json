@@ -39,26 +39,9 @@
     },
     "storageAccountName": {
       "type": "string",
-      "defaultValue": "[concat('storage', uniquestring(resourceGroup().id))]",
+      "defaultValue": "[concat('ofnprostore', uniquestring(resourceGroup().id))]",
       "metadata": {
         "description": "The unique DNS name for the storage account used to store the boot diagnostics logs of the virtual machine."
-      }
-    },
-    "storageAccountType": {
-      "type": "string",
-      "defaultValue": "Premium_LRS",
-      "allowedValues": [
-        "Standard_LRS",
-        "Standard_GRS",
-        "Standard_RAGRS",
-        "Standard_ZRS",
-        "Premium_LRS",
-        "Premium_ZRS",
-        "Standard_GZRS",
-        "Standard_RAGZRS"
-      ],
-      "metadata": {
-        "description": "The storage SKU for the OS and data disks of the virtual machine."
       }
     },
     "vmName": {
@@ -118,6 +101,23 @@
       "type": "securestring",
       "metadata": {
         "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
+      }
+    },
+    "diskStorageAccountType": {
+      "type": "string",
+      "defaultValue": "Premium_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Standard_ZRS",
+        "Premium_LRS",
+        "Premium_ZRS",
+        "Standard_GZRS",
+        "Standard_RAGZRS"
+      ],
+      "metadata": {
+        "description": "The storage SKU for the OS and data disks of the virtual machine."
       }
     },
     "numDataDisks": {
@@ -664,7 +664,7 @@
             "createOption": "FromImage",
             "diskSizeGB": "[parameters('osDiskSize')]",
             "managedDisk": {
-              "storageAccountType": "[parameters('storageAccountType')]"
+              "diskStorageAccountType": "[parameters('diskStorageAccountType')]"
             }
           },
           "copy": [
@@ -678,7 +678,7 @@
                 "name": "[concat(parameters('vmName'),'-DataDisk',copyIndex('dataDisks'))]",
                 "createOption": "Empty",
                 "managedDisk": {
-                  "storageAccountType": "[parameters('storageAccountType')]"
+                  "diskStorageAccountType": "[parameters('diskStorageAccountType')]"
                 }
               }
             }

@@ -17,9 +17,6 @@
     "storageAccountName": {
       "value": "ofndevstorageaccount"
     },
-    "storageAccountType": {
-      "value": "Premium_LRS"
-    },
     "vmName": {
       "value": "OpenFoodNetworkVm"
     },
@@ -43,6 +40,9 @@
     },
     "adminPasswordOrKey": {
       "value": "Trustno1"
+    },
+    "diskStorageAccountType": {
+      "value": "Premium_LRS"
     },
     "osDiskSize": {
       "value": 100
@@ -68,17 +68,11 @@
     "deployLogAnalytics": {
       "value": true
     },
-    "workspaceName": {
-      "value": "OpenFoodNetworDevWorkspace"
-    },
     "workspaceSku": {
       "value": "Standard"
     },
     "deployFrontDoor": {
       "value": true
-    },
-    "frontDoorName": {
-      "value": "OpenFoodNetworkFrontDoor"
     },
     "frontDoorFrontendEndpoint": {
       "value": {

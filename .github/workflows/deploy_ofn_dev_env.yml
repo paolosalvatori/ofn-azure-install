@@ -1,8 +1,6 @@
 # This workflow deploys the OFN development environment via an ARM template
 name: Deploy OFN Dev Env
-on:
-  repository_dispatch:
-    types: [deploy_ofn_dev_env]
+on: repository_dispatch
 jobs:
   azure-job:
     runs-on: [ubuntu-latest]

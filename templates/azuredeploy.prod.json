@@ -160,7 +160,8 @@
     "scriptFileNames": {
       "type": "array",
       "defaultValue": [
-        "install-prod.sh"
+        "install-prod.sh",
+        "process-templates.sh"
       ],
       "metadata": {
         "description": "An array containing the name of the scripts to download from the URI specified by the scriptFilePath parameter."

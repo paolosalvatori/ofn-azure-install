@@ -450,6 +450,9 @@
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('virtualNetworkName')]",
       "location": "[parameters('location')]",
+      "dependsOn": [
+        "[variables('nsgId')]"
+      ],
       "properties": {
         "addressSpace": {
           "addressPrefixes": [

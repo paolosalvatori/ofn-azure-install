@@ -6,12 +6,16 @@ gitHubRepo="ofn-azure-install"
 url="https://api.github.com/repos/$gitHubOwner/$gitHubRepo/dispatches"
 keyVaultName="BaboKeyVault"
 keyVaultSecretName="GitHubPersonalAccessToken"
-eventType="deploy_dev_env"
+eventType="deploy_ofn_dev_env"
+
+# Formatting
+redPrefix="\033[38;5;1m"
+redPostfix="\033[m"
 
 # Set the payload
 read -r -d '' payload << EndOfMessage
 {
-    "event_type": "deploy_dev_env",
+    "event_type": "deploy_ofn_dev_env",
     "client_payload": {
         "location": "West Europe",
         "resourceGroupName": "OfnDevRG",
@@ -26,7 +30,7 @@ read -r -d '' payload << EndOfMessage
 EndOfMessage
 
 # Retrieve the GitHub personal access token from Key Vault
-echo "Retrieving the personal access token for the [$gitHubOwner] GitHub account from the [$keyVaultSecretName] secret in [$keyVaultName] key vault..."
+echo -e "Retrieving the personal access token for the [${redPrefix}${gitHubOwner}${redPostfix}] GitHub account from the [${redPrefix}${keyVaultSecretName}${redPostfix}] secret in [${redPrefix}${keyVaultName}${redPostfix}] key vault..."
 gitHubPAT=$(az keyvault secret show \
     --name $keyVaultSecretName \
     --vault-name $keyVaultName \
@@ -34,13 +38,13 @@ gitHubPAT=$(az keyvault secret show \
     --output tsv)
 
 if [[ $? == 0 ]]; then
-    echo "Personal access token for the [$gitHubOwner] GitHub account successfully retrieved from the [$keyVaultSecretName] secret in [$keyVaultName] key vault"
+    echo -e "Personal access token for the [${redPrefix}${gitHubOwner}${redPostfix}] GitHub account successfully retrieved from the [${redPrefix}${keyVaultSecretName}${redPostfix}] secret in [${redPrefix}${keyVaultName}${redPostfix}] key vault"
 else
-    echo "Failed to retrieve the Personal access token for the [$gitHubOwner] GitHub account from the [$keyVaultSecretName] secret in [$keyVaultName] key vault"
+    echo -e "Failed to retrieve the Personal access token for the [$gitHubOwner] GitHub account from the [${redPrefix}${keyVaultSecretName}${redPostfix}] secret in [${redPrefix}${keyVaultName}${redPostfix}] key vault"
 fi
 
 # Manually call the deploy_arm_template type via a repository_dispatch event
-echo "Calling [$eventType] workflow..."
+echo -e "Calling [${redPrefix}${eventType}${redPostfix}] workflow in the [${redPrefix}${gitHubRepo}${redPostfix}] GitHub repo..."
 httpCode=$(curl \
     --header "Authorization: token $gitHubPAT" \
     --header "Accept: application/vnd.github.everest-preview+json" \
@@ -50,7 +54,7 @@ httpCode=$(curl \
     $url)
 
 if (( $httpCode >= 200 && $httpCode < 300 )); then
-    echo "[$eventType] workflow successfully called"
+    echo -e "[${redPrefix}${eventType}${redPostfix}] workflow successfully called in the [${redPrefix}${gitHubRepo}${redPostfix}] GitHub repo"
 else
-    echo "Failed to call the [$eventType] worklow"
+    echo -e "Failed to call the [${redPrefix}${eventType}${redPostfix}] worklow in the [${redPrefix}${gitHubRepo}${redPostfix}] GitHub repo"
 fi

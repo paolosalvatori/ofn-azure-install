@@ -1,5 +1,5 @@
 # This workflow deploys the OFN development environment via an ARM template
-name: Deploy OFN Developmenet Environment
+name: Deploy OFN Dev
 on:
   repository_dispatch:
     types: [deploy_dev_env]

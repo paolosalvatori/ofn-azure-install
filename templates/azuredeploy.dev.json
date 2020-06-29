@@ -527,7 +527,7 @@
             "createOption": "FromImage",
             "diskSizeGB": "[parameters('osDiskSize')]",
             "managedDisk": {
-              "diskStorageAccountType": "[parameters('diskStorageAccountType')]"
+              "storageAccountType": "[parameters('diskStorageAccountType')]"
             }
           },
           "copy": [
@@ -541,7 +541,7 @@
                 "name": "[concat(parameters('vmName'),'-DataDisk',copyIndex('dataDisks'))]",
                 "createOption": "Empty",
                 "managedDisk": {
-                  "diskStorageAccountType": "[parameters('diskStorageAccountType')]"
+                  "storageAccountType": "[parameters('diskStorageAccountType')]"
                 }
               }
             }

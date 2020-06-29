@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Variables
-resourceGroupName="OfnDevRG"
-location="WestEurope"
+resourceGroupName="OpenFoodNetworkRG"
+location="EastUS"
 deploy=1
 
 # ARM template and parameters files

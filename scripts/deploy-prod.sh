@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-resourceGroupName="OfnProdRG"
+resourceGroupName="OpenFoodNetworkProdRG"
 location="EastUS"
 deploy=1
 

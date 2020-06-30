@@ -192,6 +192,7 @@ databaseName=$(jq -r '.databaseName' json.txt)
 administratorLogin=$(jq -r '.administratorLogin' json.txt)
 administratorPassword=$(jq -r '.administratorPassword' json.txt)
 adminUsername=$(jq -r '.adminUsername' json.txt)
+frontDoorHostname=$(jq -r '.frontDoorHostname' json.txt)
 
 cat > ./parameters.txt <<EOL
 deployPostgreSQL=${deployPostgreSQL}
@@ -213,7 +214,7 @@ bash process-templates.sh secrets.template.yml /usr/local/src/ofn-install/invent
     OFN_ADMIN_PASSWORD=${administratorPassword}
 
 bash process-templates.sh config.template.yml /usr/local/src/ofn-install/inventory/host_vars/ofn.azure.cuteurl.net/config.yml\
-    OFN_DOMAIN=ofn.azure.cuteurl.com \
+    OFN_DOMAIN=${frontDoorHostname} \
     OFN_HOST_ID=ofn-azure \
     OFN_ADMIN_EMAIL=nierfurt@microsoft.com \
     OFN_MAIL_DOMAIN=ofn.azure.cuteurl.com

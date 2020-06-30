@@ -504,10 +504,10 @@
       "provisionVMAgent": true
     },
     "scriptExtensionJson": {
-        "deployPostgreSQL": "[toLower(string(parameters('deployPostgreSQL')))]",
-        "serverName": "[parameters('serverName')]",
+        "deployPostgreSQL": "[parameters('deployPostgreSQL')]",
+        "serverName": "[concat(parameters('serverName'), '.postgres.database.azure.com')]",
         "databaseName": "[parameters('databaseName')]",
-        "administratorLogin": "[parameters('administratorLogin')]",
+        "administratorLogin": "[concat(parameters('administratorLogin'), '@', parameters('serverName'))]",
         "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
         "adminUsername": "[parameters('adminUsername')]",
         "frontDoorHostname": "[variables('frontDoorHostname')]"

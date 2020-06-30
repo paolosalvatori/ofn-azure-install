@@ -190,7 +190,7 @@ deployPostgreSQL=$(jq -r '.deployPostgreSQL' json.txt)
 serverName=$(jq -r '.serverName' json.txt)
 databaseName=$(jq -r '.databaseName' json.txt)
 administratorLogin=$(jq -r '.administratorLogin' json.txt)
-administratorPassword=$(jq -r '.administratorPassword' json.txt)
+administratorPassword=$(jq -r '.administratorLoginPassword' json.txt)
 adminUsername=$(jq -r '.adminUsername' json.txt)
 frontDoorHostname=$(jq -r '.frontDoorHostname' json.txt)
 

@@ -223,4 +223,8 @@ bash process-templates.sh config.template.yml /usr/local/src/ofn-install/invento
 cd /usr/local/src/ofn-install
 pip install -r requirements.txt
 bin/setup
-ansible-playbook site.yml --limit=azure -vvv -c local
+# Due to timing issues the ansible playbook sometimes fails on requesting lets encrypt certificates
+# Just re-running the playbook solves the isses
+ansible-playbook site.yml --limit=azure -vvv -c local || \
+    ansible-playbook site.yml --limit=azure -vvv -c local
+

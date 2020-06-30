@@ -208,6 +208,7 @@ git clone https://github.com/ne-msft/ofn-install /usr/local/src/ofn-install -b o
 
 bash process-templates.sh secrets.template.yml /usr/local/src/ofn-install/inventory/host_vars/ofn.azure.cuteurl.net/secrets.yml \
     OFN_RANDOM_SECRET_TOKEN=$(openssl rand -hex 128) \
+    OFN_DB_NAME=${databaseName} \
     OFN_DB_PASSWORD=${administratorPassword} \
     OFN_DB_HOST=${serverName} \
     OFN_DB_USER=${administratorLogin} \

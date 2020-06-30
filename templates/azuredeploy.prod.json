@@ -1169,7 +1169,7 @@
                   "httpsPort": "[parameters('httpsPort')]",
                   "priority": 1,
                   "weight": 100,
-                  "backendHostHeader": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
+                  "backendHostHeader": "[variables('frontDoorHostname')]"
                 }
               ],
               "healthProbeSettings": {

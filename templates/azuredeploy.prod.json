@@ -256,7 +256,7 @@
           "/*"
         ],
         "customForwardingPath": "/",
-        "forwardingProtocol": "HttpsOnly",
+        "forwardingProtocol": "MatchRequest",
         "cacheConfiguration": {
           "queryParameterStripDirective": "StripNone",
           "dynamicCompression": "Enabled"

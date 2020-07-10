@@ -93,13 +93,14 @@
       "value": {
         "name": "VmRoutingRule",
         "acceptedProtocols": [
+          "Http",
           "Https"
         ],
         "patternsToMatch": [
           "/*"
         ],
         "customForwardingPath": "/",
-        "forwardingProtocol": "HttpsOnly",
+        "forwardingProtocol": "MatchRequest",
         "cacheConfiguration": {
           "queryParameterStripDirective": "StripNone",
           "dynamicCompression": "Enabled"

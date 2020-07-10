@@ -160,7 +160,8 @@
     "scriptFileNames": {
       "type": "array",
       "defaultValue": [
-        "install-prod.sh"
+        "install-prod.sh",
+        "process-templates.sh"
       ],
       "metadata": {
         "description": "An array containing the name of the scripts to download from the URI specified by the scriptFilePath parameter."
@@ -255,7 +256,7 @@
           "/*"
         ],
         "customForwardingPath": "/",
-        "forwardingProtocol": "HttpsOnly",
+        "forwardingProtocol": "MatchRequest",
         "cacheConfiguration": {
           "queryParameterStripDirective": "StripNone",
           "dynamicCompression": "Enabled"
@@ -325,7 +326,7 @@
     },
     "serverName": {
       "type": "string",
-      "defaultValue": "[concat(parameters('vmName'), uniquestring(resourceGroup().id))]",
+      "defaultValue": "[concat('ofnpgsql', uniquestring(resourceGroup().id))]",
       "minLength": 1,
       "metadata": {
         "description": "Specifies the name of the PostgreSQL server."
@@ -484,6 +485,7 @@
     "nsgId": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('nsgName'))]",
     "vmId": "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]",
     "frontDoorId": "[resourceId('Microsoft.Network/frontdoors', parameters('frontDoorName'))]",
+    "frontDoorHostname": "[concat(toLower(parameters('frontDoorName')), '.azurefd.net')]",
     "frontDoorBackendPoolId": "[concat(variables('frontDoorId'), '/backendPools/', parameters('frontDoorBackendPool').name)]",
     "frontDoorHealthProbeSettingsId": "[concat(variables('frontDoorId'), '/healthProbeSettings/', parameters('frontDoorHealthProbeSettings').name)]",
     "frontDoorLoadBalancerId": "[concat(variables('frontDoorId'), '/loadBalancingSettings/', parameters('frontDoorBackendPool').loadBalancerName)]",
@@ -500,6 +502,15 @@
         ]
       },
       "provisionVMAgent": true
+    },
+    "scriptExtensionJson": {
+        "deployPostgreSQL": "[parameters('deployPostgreSQL')]",
+        "serverName": "[concat(parameters('serverName'), '.postgres.database.azure.com')]",
+        "databaseName": "[parameters('databaseName')]",
+        "administratorLogin": "[concat(parameters('administratorLogin'), '@', parameters('serverName'))]",
+        "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+        "adminUsername": "[parameters('adminUsername')]",
+        "frontDoorHostname": "[variables('frontDoorHostname')]"
     },
     "postgreSQLServerId": "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('serverName'))]",
     "privateDnsZoneName": "privatelink.postgres.database.azure.com",
@@ -773,7 +784,7 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('bash ',  parameters('scriptFileNames')[0], ' ', base64(concat('{ \"deployPostgreSQL\": ', toLower(string(parameters('deployPostgreSQL'))), ', \"serverName\": \"', parameters('serverName'), '\", \"databaseName\": \"', parameters('databaseName'), '\", \"administratorLogin\": \"', parameters('administratorLogin'), '\", \"administratorLoginPassword\": \"' , parameters('administratorLoginPassword'), '\", \"adminUsername\": \"', parameters('adminUsername'), '\" }')))]"
+          "commandToExecute": "[concat('bash ',  parameters('scriptFileNames')[0], ' ', base64(string(variables('scriptExtensionJson'))))]"
         }
       }
     },
@@ -1158,7 +1169,7 @@
                   "httpsPort": "[parameters('httpsPort')]",
                   "priority": 1,
                   "weight": 100,
-                  "backendHostHeader": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
+                  "backendHostHeader": "[variables('frontDoorHostname')]"
                 }
               ],
               "healthProbeSettings": {
@@ -1184,7 +1195,7 @@
           {
             "name": "[parameters('frontDoorFrontendEndpoint').name]",
             "properties": {
-              "hostName": "[concat(toLower(parameters('frontDoorName')), '.azurefd.net')]",
+              "hostName": "[variables('frontDoorHostname')]",
               "sessionAffinityEnabledState": "[parameters('frontDoorFrontendEndpoint').sessionAffinityEnabledState]",
               "sessionAffinityTtlSeconds": "[parameters('frontDoorFrontendEndpoint').sessionAffinityTtlSeconds]",
               "resourceState": "Enabled",

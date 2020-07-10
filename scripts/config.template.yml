@@ -1,0 +1,11 @@
+---
+
+domain: <OFN_DOMAIN>
+host_id: <OFN_HOST_ID> # country initials (eg uk, es, de) and environment (default is prod)
+rails_env: production
+
+admin_email: <OFN_ADMIN_EMAIL>
+
+mail_domain: <OFN_MAIL_DOMAIN>
+
+nginx_enable_brotli: False

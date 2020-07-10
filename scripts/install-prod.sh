@@ -156,7 +156,11 @@ update_system() {
   # Install jq
   sudo apt-get install -y jq
   jq --version
+
+  # Install some required libraries
+  sudo apt-get install -y python-pip libgd-dev libgeoip-dev
 }
+
 
 # Variables
 #deployPostgreSQL=$1
@@ -180,16 +184,15 @@ update_system() {
 update_system
 
 echo $1 > base64.txt
+json=$(echo $1 | base64 --decode > json.txt)
 
-json=$(echo $1 | base64 --decode) 
-echo $json > json.txt
-
-deployPostgreSQL=$(echo $json | jq -r '.deployPostgreSQL')
-serverName=$(echo $json | jq -r '.serverName')
-databaseName=$(echo $json | jq -r '.databaseName')
-administratorLogin=$(echo $json | jq -r '.administratorLogin')
-administratorPassword=$(echo $json | jq -r '.administratorPassword')
-adminUsername=$(echo $json | jq -r '.adminUsername')
+deployPostgreSQL=$(jq -r '.deployPostgreSQL' json.txt)
+serverName=$(jq -r '.serverName' json.txt)
+databaseName=$(jq -r '.databaseName' json.txt)
+administratorLogin=$(jq -r '.administratorLogin' json.txt)
+administratorPassword=$(jq -r '.administratorLoginPassword' json.txt)
+adminUsername=$(jq -r '.adminUsername' json.txt)
+frontDoorHostname=$(jq -r '.frontDoorHostname' json.txt)
 
 cat > ./parameters.txt <<EOL
 deployPostgreSQL=${deployPostgreSQL}
@@ -199,3 +202,29 @@ administratorLogin=${administratorLogin}
 administratorPassword=${administratorPassword}
 adminUsername=${adminUsername}
 EOL
+
+mkdir -p /usr/local/src/ofn-install
+git clone https://github.com/ne-msft/ofn-install /usr/local/src/ofn-install -b ofn-azure-v3
+
+bash process-templates.sh secrets.template.yml /usr/local/src/ofn-install/inventory/host_vars/ofn.azure.cuteurl.net/secrets.yml \
+    OFN_RANDOM_SECRET_TOKEN=$(openssl rand -hex 128) \
+    OFN_DB_NAME=${databaseName} \
+    OFN_DB_PASSWORD=${administratorPassword} \
+    OFN_DB_HOST=${serverName} \
+    OFN_DB_USER=${administratorLogin} \
+    OFN_ADMIN_PASSWORD=${administratorPassword}
+
+bash process-templates.sh config.template.yml /usr/local/src/ofn-install/inventory/host_vars/ofn.azure.cuteurl.net/config.yml\
+    OFN_DOMAIN=${frontDoorHostname} \
+    OFN_HOST_ID=ofn-azure \
+    OFN_ADMIN_EMAIL=nierfurt@microsoft.com \
+    OFN_MAIL_DOMAIN=ofn.azure.cuteurl.com
+
+cd /usr/local/src/ofn-install
+pip install -r requirements.txt
+bin/setup
+# Due to timing issues the ansible playbook sometimes fails on requesting lets encrypt certificates
+# Just re-running the playbook solves the isses
+ansible-playbook site.yml --limit=azure -vvv -c local || \
+    ansible-playbook site.yml --limit=azure -vvv -c local
+

@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Variables
-resourceGroupName="OpenFoodNetworkProdRG"
-location="EastUS"
+resourceGroupName="${1:-OpenFoodNetworkProdRG}"
+location="${2:-EastUS}"
 deploy=1
 
 # ARM template and parameters files
 template="../templates/azuredeploy.prod.json"
-parameters="../templates/azuredeploy.prod.parameters.json"
+parameters="${3:-../templates/azuredeploy.prod.parameters.json}"
 
 # SubscriptionId of the current subscription
 subscriptionId=$(az account show --query id --output tsv)

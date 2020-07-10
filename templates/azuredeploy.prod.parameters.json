@@ -58,23 +58,20 @@
     },
     "scriptFileNames": {
       "value": [
-        "install-prod.sh"
+        "install-prod.sh",
+        "process-templates.sh",
+        "secrets.template.yml",
+        "config.template.yml"
       ]
     },
     "deployLogAnalytics": {
       "value": true
-    },
-    "workspaceName": {
-      "value": "OpenFoodNetworkProdWorkspace"
     },
     "workspaceSku": {
       "value": "Standard"
     },
     "deployFrontDoor": {
       "value": true
-    },
-    "frontDoorName": {
-      "value": "OpenFoodNetworkProdFrontDoor"
     },
     "frontDoorFrontendEndpoint": {
       "value": {
@@ -112,11 +109,11 @@
         "name": "VmHealthProbeSettings",
         "intervalInSeconds": 30,
         "path": "/",
-        "protocol": "Https"
+        "protocol": "Http"
       }
     },
     "httpPort": {
-      "value": 3000
+      "value": 80
     },
     "httpsPort": {
       "value": 443
@@ -132,9 +129,6 @@
     },
     "deployPostgreSQL": {
       "value": true
-    },
-    "serverName": {
-      "value": "OpenFoodNetworkPostgreSQL"
     },
     "databaseName": {
       "value": "open_food_network_prod"

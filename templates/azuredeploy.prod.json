@@ -326,7 +326,7 @@
     },
     "serverName": {
       "type": "string",
-      "defaultValue": "[concat(parameters('vmName'), uniquestring(resourceGroup().id))]",
+      "defaultValue": "[concat('ofnpgsql', uniquestring(resourceGroup().id))]",
       "minLength": 1,
       "metadata": {
         "description": "Specifies the name of the PostgreSQL server."
